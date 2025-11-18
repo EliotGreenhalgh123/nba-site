@@ -1,23 +1,37 @@
-import type { Team } from '../models/Team.ts'
-import type { Player } from '../models/Player.ts'
-import type {PlayerGameStat} from "../models/Stats.ts";
+import { BalldontlieAPI } from "@balldontlie/sdk";
 
-const BASE = "https://www.balldontlie.io/api/v1"
+const api = new BalldontlieAPI({ apiKey: "2f4bb2ab-bf3e-4bbb-a7f7-4e84f7e18f85"});
 
-export async function fetchTeams(): Promise<Team[]> {
-    const response = await fetch(`${BASE}/teams`);
-    const data = await response.json();
-    return data.data;
+export async function getTeams() {
+    try {
+        const response = await api.nba.getTeams();
+        return response.data;
+    }
+    catch (error) {
+        console.error("Error fetching teams: ", error);
+        throw error;
+    }
 }
 
-export async function fetchPlayers(): Promise<Player[]> {
-    const response = await fetch(`${BASE}/players`);
-    const data = await response.json();
-    return data.data;
+export async function getPlayers() {
+    try {
+        const response = await api.nba.getPlayers();
+        return response.data;
+    }
+    catch (error) {
+        console.error("Error fetching players: ", error);
+        throw error;
+    }
 }
 
-export async function fetchPlayerStats(playerID: number): Promise<PlayerGameStat[]> {
-    const response = await fetch(`${BASE}/stats?player_ids[]=${playerID}`);
-    const data = await response.json();
-    return data.data;
+export async function getGames() {
+    try {
+        const response = await api.nba.getGames();
+        return response.data;
+    }
+    catch (error) {
+        console.error("Error fetching teams: ", error);
+        throw error;
+    }
 }
+

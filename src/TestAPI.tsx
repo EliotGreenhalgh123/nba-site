@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchTeams, fetchPlayers, fetchPlayerStats } from "./api/nba";
+import { getTeams } from "./api/nba";
 
 export default function TestApi() {
     const [teams, setTeams] = useState<any>(null);
@@ -9,7 +9,7 @@ export default function TestApi() {
         async function run() {
             try {
                 console.log("Fetching teams...");
-                const data = await fetchTeams();
+                const data = await getTeams();
                 console.log("Teams:", data);
                 setTeams(data);
             } catch (err: any) {
@@ -25,8 +25,13 @@ export default function TestApi() {
 
     return (
         <div>
-            <h1>API Test Successful</h1>
-            <p>Fetched {teams.length} teams.</p>
+            <h1>NBA Teams</h1>
+            <ul>
+                {teams.map((team: any) => (
+                    <li key={team.id}>{team.name}</li>
+                ))}
+            </ul>
         </div>
-    );
+    )
+
 }
